@@ -1,48 +1,6 @@
-const subredditNameClass = "_2yYPPW47QxD4lFQTKpfpLQ"
+const subredditNameClass = "_2yYPPW47QxD4lFQTKpfpLQ";
+const toggleMessage = "[this comment has been flagged for having outrage]";
 
-async function getOutrageClassification(text) {
-    try {
-        const response = await fetch(
-            `http://localhost:5000/api/classify`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({text: text}),
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.log(`error: ${error}`);
-    }
-}
-
-
-function makeSubredditNameGrey() {
-    console.log("Running the extension!")
-    const subredditName = document.querySelector('h1._2yYPPW47QxD4lFQTKpfpLQ');
-    if (subredditName) {
-        const originalText = subredditName.textContent;
-        subredditName.textContent = `${originalText} (this is the subreddit)`;
-        subredditName.style.color = 'grey';
-    }
-}
-
-function classifySubredditThreads() {
-    const pElements = document.querySelectorAll('div._292iotee39Lmt0MkQZ2hPV.RichTextJSON-root p');
-    pElements.forEach(async (pElement) => {
-        const text = pElement.textContent;
-        //const result = await getOutrageClassification(text);
-        const result = 0;
-        pElement.textContent += ` this text has ${result.class == 0 ? 'no' : ''} outrage, prob = ${result.prob}, label = ${result.class}`;
-        pElement.style.color = 'grey';
-    });
-}
 
 function createDropdownToggle() {
     const dropdownDiv = document.createElement('div');
@@ -111,5 +69,5 @@ function createExpandableDiv() {
 }
 
 window.addEventListener('load', makeSubredditNameGrey);
-window.addEventListener('load', classifySubredditThreads);
+//window.addEventListener('load', classifySubredditThreads);
 window.addEventListener('load', createExpandableDiv);
