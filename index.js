@@ -49,7 +49,7 @@ function createDropdownToggle() {
     dropdownDiv.className = 'dropdown';
 
     const paragraph = document.createElement('p');
-    paragraph.className = 'dropdown-toggle-text';
+    paragraph.className = 'dropdown-toggle-text not-expanded';
     const span = document.createElement('span');
     span.textContent = '▶ ';
     const text = document.createTextNode('Click here to expand the toggle.');
@@ -69,37 +69,47 @@ function createExpandableDiv() {
         wrapperDiv.className = 'expandable-div not-expanded';
         
         const dropdownToggle = createDropdownToggle();
-        dropdownToggle.className = 'dropdown-toggle not-expanded';
-        dropdownToggle.addEventListener('click', toggleTarget);
+        dropdownToggle.className = 'dropdown-toggle';
+
+        /*
+        dropdownToggle.addEventListener('click', (event) => {
+            if (event.currentTarget.classList.contains('expanded')) {
+                console.log("Toggling expanded to not-expanded");
+                event.currentTarget.classList.remove('expanded');
+                event.currentTarget.classList.add('not-expanded');
+            }
+            else if (event.currentTarget.classList.contains('not-expanded')) {
+                console.log("Toggling not-expanded to expanded");
+                event.currentTarget.classList.remove('not-expanded');
+                event.currentTarget.classList.add('expanded');
+            }
+            else {
+                console.log('Neither expanded nor not-expanded are in toggle list');
+            }
+        });
+        */
         
         wrapperDiv.appendChild(dropdownToggle);
         wrapperDiv.appendChild(originalDiv.cloneNode(true));
+
+        wrapperDiv.addEventListener('click', (event) => {
+            if(event.currentTarget.classList.contains('expanded')) {
+                console.log("Toggling expanded to not-expanded");
+                event.currentTarget.classList.remove('expanded');
+                event.currentTarget.classList.add('not-expanded');
+            } else if (event.currentTarget.classList.contains('not-expanded')) {
+                console.log("Toggling not-expanded to expanded");
+                event.currentTarget.classList.remove('not-expanded');
+                event.currentTarget.classList.add('expanded');
+            } else {
+                console.log('Neither expanded nor not-expanded are in toggle list');
+            }
+        });
         
         originalDiv.parentNode.replaceChild(wrapperDiv, originalDiv);
     }
 }
 
-function toggleTarget(event) {
-    // expand and toggle the target
-    const target = event.currentTarget;
-    if ('expanded' in target.classList) {
-        console.log("Toggling expanded to not-expanded");
-        target.classList.remove('expanded');
-        target.classList.add('not-expanded');
-    } else {
-        console.log("Toggling not-expanded to expanded");
-        target.classList.remove('not-expanded');
-        target.classList.add('expanded');
-    }
-}
-
-/*
-document.addEventListener('click', function (event) {
-    if (event.target.classList.contains('expandable-div')) {
-        toggleExpandableDiv(event);
-    }
-});
-*/
 window.addEventListener('load', makeSubredditNameGrey);
 window.addEventListener('load', classifySubredditThreads);
 window.addEventListener('load', createExpandableDiv);
