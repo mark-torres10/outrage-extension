@@ -1,0 +1,7 @@
+{
+  "manifest_version": 3,
+  "name": "Outrage Filter",
+  "description": "Filters out content with moral outrage.",
+  "version": "1.0",
+  "author": "Mark Torres"
+}
